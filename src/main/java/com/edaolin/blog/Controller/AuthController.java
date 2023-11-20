@@ -4,25 +4,27 @@ import com.edaolin.blog.Data.User;
 import com.edaolin.blog.Dto.UserDto;
 import com.edaolin.blog.Service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @Controller
 public class AuthController {
-
-    private UserService userService;
+    @Autowired
+    UserService userService;
 
     public AuthController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("index")
+    @GetMapping("/index")
     public String home(){
         return "index";
     }
@@ -33,7 +35,7 @@ public class AuthController {
     }
 
     // handler method to handle user registration request
-    @GetMapping("register")
+    @GetMapping("/register")
     public String showRegistrationForm(Model model){
         UserDto user = new UserDto();
         model.addAttribute("user", user);
