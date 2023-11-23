@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BlogService {
 
-    void saveBlog(Blog blog, String email) throws ExceptionCollection.NotFoundException;
+    void saveBlog(Blog blog, String email) throws CustomiseException;
 
     List<Blog> findByUser(String Email) throws CustomiseException;
     List<Blog> findAllBlogs();

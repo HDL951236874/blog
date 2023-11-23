@@ -40,12 +40,11 @@ public class BlogServiceImpl implements BlogService {
         if(user == null){
             throw new ExceptionCollection.NotFoundException("User Not Found");
         }
-
-        return null;
+        return user.getBlogs();
     }
 
     @Override
     public List<Blog> findAllBlogs() {
-        return null;
+        return blogRepository.findAll();
     }
 }
