@@ -16,6 +16,10 @@ public class Blog {
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @Column(name = "title", nullable = true, columnDefinition = "TEXT")
+    private String title;
+
     @Column(name = "text", nullable = true, columnDefinition = "TEXT")
     private String text;
 
