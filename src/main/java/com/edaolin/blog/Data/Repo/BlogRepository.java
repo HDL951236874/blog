@@ -9,6 +9,4 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
     void deleteAll();
     void deleteById(int id);
     void deleteByTitle(String title);
-    void updateBlogById(int id, Blog blog);
-    void updateBlogByTitle(String title, Blog blog);
 }
