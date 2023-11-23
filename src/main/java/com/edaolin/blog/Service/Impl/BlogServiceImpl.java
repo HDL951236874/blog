@@ -35,7 +35,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Blog findByUser(String Email) {
+    public List<Blog> findByUser(String email) throws ExceptionCollection.NotFoundException {
+        User user = userRepository.findByEmail(email);
+        if(user == null){
+            throw new ExceptionCollection.NotFoundException("User Not Found");
+        }
 
         return null;
     }

@@ -12,6 +12,5 @@ public class TestController {
     public ResponseEntity<String> success(){
 
         return new ResponseEntity<>("Login success!", HttpStatus.OK);
-
     }
 }
