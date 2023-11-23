@@ -35,8 +35,17 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Blog> findByUser(String email) throws ExceptionCollection.NotFoundException {
+    public List<Blog> findUserBlogsByEmail(String email) throws ExceptionCollection.NotFoundException {
         User user = userRepository.findByEmail(email);
+        if(user == null){
+            throw new ExceptionCollection.NotFoundException("User Not Found");
+        }
+        return user.getBlogs();
+    }
+
+    @Override
+    public List<Blog> findUserBlogsByUserId(int id) throws ExceptionCollection.NotFoundException {
+        User user = userRepository.findById(id);
         if(user == null){
             throw new ExceptionCollection.NotFoundException("User Not Found");
         }
@@ -46,5 +55,10 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public List<Blog> findAllBlogs() {
         return blogRepository.findAll();
+    }
+
+    @Override
+    public void deleteBlogByBlogId(int id) {
+        blogRepository.deleteById(id);
     }
 }

@@ -6,6 +6,7 @@ import com.edaolin.blog.Data.Repo.UserRepository;
 import com.edaolin.blog.Exceptions.CustomiseException;
 import com.edaolin.blog.Service.BlogService;
 import com.edaolin.blog.Service.UserService;
+import jakarta.validation.constraints.Null;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,16 +27,21 @@ public class BlogController {
         this.blogService = blogService;
     }
 
-    @GetMapping("/blogs")
+    @RequestMapping(value = "/all_blogs", method = RequestMethod.GET)
     public ResponseEntity<List<Blog>> getAllBlogs(){
         List<Blog> allBlogs = blogService.findAllBlogs();
         return new ResponseEntity<>(allBlogs, HttpStatus.OK);
     }
 
-    @GetMapping("/blogs/{email}")
-    public ResponseEntity<List<Blog>> getAllBlogsByUser(@PathVariable("email") String email) throws CustomiseException {
+    @RequestMapping(value = "/user/{id}/blogs", method = RequestMethod.GET)
+    public ResponseEntity<List<Blog>> getAllBlogsByUser(@PathVariable("id") int id) throws CustomiseException {
         List<Blog> blogsByUser;
-        blogsByUser = blogService.findByUser(email);
+        blogsByUser = blogService.findUserBlogsByUserId(id);
         return new ResponseEntity<>(blogsByUser, HttpStatus.OK);
     }
+
+//    @RequestMapping (value = "/blog/{id}", method = RequestMethod.DELETE)
+//    public ResponseEntity<String> deleteBlogById(@PathVariable("id") int id){
+//
+//    }
 }

@@ -11,7 +11,10 @@ public interface BlogService {
 
     void saveBlog(Blog blog, String email) throws CustomiseException;
 
-    List<Blog> findByUser(String Email) throws CustomiseException;
-    List<Blog> findAllBlogs();
+    List<Blog> findUserBlogsByEmail(String email) throws ExceptionCollection.NotFoundException;
 
+    List<Blog> findUserBlogsByUserId(int id) throws ExceptionCollection.NotFoundException;
+
+    List<Blog> findAllBlogs();
+    void deleteBlogByBlogId(int id);
 }
