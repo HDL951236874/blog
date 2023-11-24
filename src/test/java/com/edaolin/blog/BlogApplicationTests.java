@@ -5,7 +5,6 @@ import com.edaolin.blog.Data.Repo.BlogRepository;
 import com.edaolin.blog.Data.Repo.UserRepository;
 import com.edaolin.blog.Dto.UserDto;
 import com.edaolin.blog.Exceptions.CustomiseException;
-import com.edaolin.blog.Exceptions.ExceptionCollection;
 import com.edaolin.blog.Service.BlogService;
 import com.edaolin.blog.Service.UserService;
 import org.junit.jupiter.api.Test;
@@ -30,6 +29,20 @@ class BlogApplicationTests {
     }
     @Test
     void AddBlogTest() throws CustomiseException {
-        blogService.deleteBlogByBlogId(10461);
+        Blog blog = new Blog();
+        blog.setPics(null);
+        blog.setText("TestText");
+        blog.setTitle("TestTitle");
+        blogService.saveBlog(blog, "daolin970108@gmail.com");
+    }
+
+    @Test
+    void UpdateBlogTest(){
+        Blog blog = new Blog();
+        blog.setPics(null);
+        blog.setText("TestText2");
+        blog.setTitle("TestTitle2");
+        blog.setId(1);
+        blogRepository.save(blog);
     }
 }

@@ -4,6 +4,7 @@ import com.edaolin.blog.Data.Blog;
 import com.edaolin.blog.Data.Repo.BlogRepository;
 import com.edaolin.blog.Data.Repo.UserRepository;
 import com.edaolin.blog.Exceptions.CustomiseException;
+import com.edaolin.blog.Exceptions.ExceptionCollection;
 import com.edaolin.blog.Service.BlogService;
 import com.edaolin.blog.Service.UserService;
 import jakarta.validation.constraints.Null;
@@ -40,8 +41,15 @@ public class BlogController {
         return new ResponseEntity<>(blogsByUser, HttpStatus.OK);
     }
 
-//    @RequestMapping (value = "/blog/{id}", method = RequestMethod.DELETE)
-//    public ResponseEntity<String> deleteBlogById(@PathVariable("id") int id){
-//
-//    }
+    @RequestMapping (value = "/blog/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteBlogById(@PathVariable("id") int id){
+        blogService.deleteBlogByBlogId(id);
+        return ResponseEntity.ok().body("Delete Successfully");
+    }
+
+    @RequestMapping(value = "/blog/{id}",method = RequestMethod.PUT)
+    public ResponseEntity<String> updateBlog(@RequestBody Blog blog) throws ExceptionCollection.NotFoundException {
+        blogService.updateBlog(blog);
+        return ResponseEntity.ok().body("Update Successfully");
+    }
 }

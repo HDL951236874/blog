@@ -17,7 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/blogs/**","/blogs");
+        return (web) -> web.ignoring().requestMatchers("/blogs/**","/blogs","/blog","/blog/**");
     }
     @Bean
     public static PasswordEncoder passwordEncoder(){

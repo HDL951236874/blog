@@ -61,4 +61,13 @@ public class BlogServiceImpl implements BlogService {
     public void deleteBlogByBlogId(int id) {
         blogRepository.deleteById(id);
     }
+
+    @Override
+    public void updateBlog(Blog blog) throws ExceptionCollection.NotFoundException {
+        Blog blogById = blogRepository.findBlogById(blog.getId());
+        if(blogById == null){
+            throw new ExceptionCollection.NotFoundException("Blog Not Found");
+        }
+        blogRepository.save(blog);
+    }
 }
