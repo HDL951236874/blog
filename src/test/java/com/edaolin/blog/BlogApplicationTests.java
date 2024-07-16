@@ -34,15 +34,10 @@ class BlogApplicationTests {
         blog.setText("TestText");
         blog.setTitle("TestTitle");
         blogService.saveBlog(blog, "daolin970108@gmail.com");
+        Blog blog1 = new Blog();
+        blog1.setPics(null);
+        blog1.setText("TestText1");
+        blog1.setTitle("TestTitle1");
     }
 
-    @Test
-    void UpdateBlogTest(){
-        Blog blog = new Blog();
-        blog.setPics(null);
-        blog.setText("TestText2");
-        blog.setTitle("TestTitle2");
-        blog.setId(1);
-        blogRepository.save(blog);
-    }
 }
