@@ -22,11 +22,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public void saveBlog(Blog blog, String email) throws ExceptionCollection.NotFoundException {
+    public void saveBlog(Blog blog, String email) throws ExceptionCollection.UserNotFoundException {
         blogRepository.save(blog);
         User user = userRepository.findByEmail(email);
         if(user == null){
-            throw new ExceptionCollection.NotFoundException("User Not Found");
+            throw new ExceptionCollection.UserNotFoundException();
         }
         List<Blog> blogs = user.getBlogs();
         blogs.add(blog);
@@ -35,32 +35,28 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public void updateBlog(Blog blog) throws ExceptionCollection.NotFoundException {
+    public void updateBlog(Blog blog) throws ExceptionCollection.BlogNotFoundException {
         Blog blogById = blogRepository.findBlogById(blog.getId());
         if(blogById == null){
-            throw new ExceptionCollection.NotFoundException("Blog Not Found");
+            throw new ExceptionCollection.BlogNotFoundException();
         }
         blogRepository.save(blog);
     }
 
-    public void deleteBlog(Blog blog) throws ExceptionCollection.NotFoundException {
-        blogRepository.deleteById(blog.getId());
-    }
-
     @Override
-    public List<Blog> findUserBlogsByEmail(String email) throws ExceptionCollection.NotFoundException {
+    public List<Blog> findUserBlogsByEmail(String email) throws ExceptionCollection.UserNotFoundException {
         User user = userRepository.findByEmail(email);
         if(user == null){
-            throw new ExceptionCollection.NotFoundException("User Not Found");
+            throw new ExceptionCollection.UserNotFoundException();
         }
         return user.getBlogs();
     }
 
     @Override
-    public List<Blog> findUserBlogsByUserId(int id) throws ExceptionCollection.NotFoundException {
+    public List<Blog> findUserBlogsByUserId(int id) throws ExceptionCollection.UserNotFoundException {
         User user = userRepository.findById(id);
         if(user == null){
-            throw new ExceptionCollection.NotFoundException("User Not Found");
+            throw new ExceptionCollection.UserNotFoundException();
         }
         return user.getBlogs();
     }

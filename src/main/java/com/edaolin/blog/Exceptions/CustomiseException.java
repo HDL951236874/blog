@@ -1,16 +1,20 @@
 package com.edaolin.blog.Exceptions;
 
-import lombok.Getter;
-import lombok.Setter;
+/*
+* Defined the CustomiseException Class
+* */
 
-@Getter
-@Setter
-public class CustomiseException extends Exception{
+public class CustomiseException extends RuntimeException{
     Long uid;
+    String message;
     public CustomiseException() {
         super();
     }
     public CustomiseException(String message) {
-        super(message);
+        this.message = message;
+    }
+    public CustomiseException(Long uid, String message) {
+        this.uid = uid;
+        this.message = message;
     }
 }

@@ -1,14 +1,12 @@
 package com.edaolin.blog.Service.Impl;
 
-import com.edaolin.blog.Data.Repo.RoleRepository;
 import com.edaolin.blog.Data.Repo.UserRepository;
-import com.edaolin.blog.Data.Role;
 import com.edaolin.blog.Data.User;
 import com.edaolin.blog.Dto.UserDto;
+import com.edaolin.blog.Exceptions.ExceptionCollection;
 import com.edaolin.blog.Service.UserService;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,12 +14,9 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
 
-    public UserServiceImpl(UserRepository userRepository,
-                           RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -34,14 +29,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public User findByEmail(String email) throws ExceptionCollection.UserNotFoundException {
+        User byEmail = userRepository.findByEmail(email);
+        if(byEmail == null){
+            throw new ExceptionCollection.UserNotFoundException();
+        }
         return userRepository.findByEmail(email);
     }
 
     @Override
     public List<UserDto> findAllUsers() {
         List<User> users = userRepository.findAll();
-        return users.stream().map((user) -> convertEntityToDto(user))
+        return users.stream().map(this::convertEntityToDto)
                 .collect(Collectors.toList());
     }
 
@@ -54,8 +53,4 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
-    private Role checkRoleExist() {
-        Role role = new Role();
-        return roleRepository.save(role);
-    }
 }
