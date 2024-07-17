@@ -11,21 +11,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @SpringBootTest
 class BlogApplicationTests {
-    @Autowired
-    UserRepository userRepository;
+
     @Autowired
     UserService userService;
     @Autowired
     BlogService blogService;
-    @Autowired
-    BlogRepository blogRepository;
+
     @Test
     void contextLoads() {
         UserDto dto = new UserDto(){{setFirstName("Daolin");setLastName("Han");setEmail("daolin970108@gmail.com");setPassword("123");}};
         userService.saveUser(dto);
-        System.out.println(userRepository.findByEmail("daolin970108@gmail.com").getName());
     }
     @Test
     void AddBlogTest() throws CustomiseException {
@@ -34,10 +35,19 @@ class BlogApplicationTests {
         blog.setText("TestText");
         blog.setTitle("TestTitle");
         blogService.saveBlog(blog, "daolin970108@gmail.com");
-        Blog blog1 = new Blog();
-        blog1.setPics(null);
-        blog1.setText("TestText1");
-        blog1.setTitle("TestTitle1");
     }
 
+    @Test
+    void deleteBlogTest() throws CustomiseException{
+        Blog blog = new Blog();
+        blog.setPics(null);
+        blog.setText("TextForDelete");
+        blog.setTitle("TestTitle");
+        blogService.saveBlog(blog, "daolin970108@gmail.com");
+        List<Blog> userBlogsByEmail = blogService.findUserBlogsByEmail("daolin970108@gmail.com");
+        userBlogsByEmail.stream().filter(b -> b.getText().equals("TextForDelete")).findFirst().ifPresent(b -> {
+            blogService.deleteBlogByBlogId(b.getId());
+        });
+
+    }
 }

@@ -12,14 +12,15 @@ import java.util.List;
 
 @Service
 public class BlogServiceImpl implements BlogService {
-    private BlogRepository blogRepository;
-    private UserRepository userRepository;
+    private final BlogRepository blogRepository;
+    private final UserRepository userRepository;
     public BlogServiceImpl(BlogRepository blogRepository,
                            UserRepository userRepository){
 
         this.blogRepository = blogRepository;
         this.userRepository = userRepository;
     }
+
     @Override
     public void saveBlog(Blog blog, String email) throws ExceptionCollection.NotFoundException {
         blogRepository.save(blog);
@@ -31,7 +32,19 @@ public class BlogServiceImpl implements BlogService {
         blogs.add(blog);
         user.setBlogs(blogs);
         userRepository.save(user);
+    }
 
+    @Override
+    public void updateBlog(Blog blog) throws ExceptionCollection.NotFoundException {
+        Blog blogById = blogRepository.findBlogById(blog.getId());
+        if(blogById == null){
+            throw new ExceptionCollection.NotFoundException("Blog Not Found");
+        }
+        blogRepository.save(blog);
+    }
+
+    public void deleteBlog(Blog blog) throws ExceptionCollection.NotFoundException {
+        blogRepository.deleteById(blog.getId());
     }
 
     @Override
@@ -60,14 +73,5 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public void deleteBlogByBlogId(int id) {
         blogRepository.deleteById(id);
-    }
-
-    @Override
-    public void updateBlog(Blog blog) throws ExceptionCollection.NotFoundException {
-        Blog blogById = blogRepository.findBlogById(blog.getId());
-        if(blogById == null){
-            throw new ExceptionCollection.NotFoundException("Blog Not Found");
-        }
-        blogRepository.save(blog);
     }
 }

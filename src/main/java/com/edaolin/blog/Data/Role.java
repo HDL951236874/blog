@@ -6,23 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="roles")
-public class Role
-{
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(nullable=false, unique=true)
-    private String name;
-
-    @ManyToMany(mappedBy="roles")
-    private List<User> users;
+    @Column(nullable=false)
+    Boolean BlogManagement;
+    @Column(nullable=false)
+    Boolean UserManagement;
 }
