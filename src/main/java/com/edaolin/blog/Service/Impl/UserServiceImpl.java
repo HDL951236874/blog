@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(userDto.getFirstName() + " " + userDto.getLastName());
         user.setEmail(userDto.getEmail());
-
+        user.setPassword(userDto.getPassword());
         userRepository.save(user);
     }
 
@@ -38,10 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> findAllUsers() {
-        List<User> users = userRepository.findAll();
-        return users.stream().map(this::convertEntityToDto)
-                .collect(Collectors.toList());
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 
     private UserDto convertEntityToDto(User user){

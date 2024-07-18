@@ -6,6 +6,7 @@ import com.edaolin.blog.Exceptions.ExceptionCollection;
 import com.edaolin.blog.Service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,11 +37,9 @@ public class AuthController {
         return ResponseEntity.ok().body("Register Success");
     }
 
-    @PostMapping
     @GetMapping("/users")
-    public String listRegisteredUsers(Model model){
-        List<UserDto> users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        return "users";
+    public ResponseEntity<List<User>> listRegisteredUsers(){
+        List<User> users = userService.findAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }
