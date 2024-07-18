@@ -29,7 +29,7 @@ public class BlogController {
         List<Blog> blogsByUser;
         blogsByUser = blogService.findUserBlogsByUserId(id);
         return new ResponseEntity<>(blogsByUser, HttpStatus.OK);
-    }
+     }
 
     @RequestMapping (value = "/blog/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteBlogById(@PathVariable("id") int id){

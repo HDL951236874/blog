@@ -1,6 +1,7 @@
 package com.edaolin.blog;
 
 
+import com.edaolin.blog.Data.Role;
 import com.edaolin.blog.Dto.UserDto;
 import com.edaolin.blog.Service.BlogService;
 import com.edaolin.blog.Service.UserService;
@@ -18,7 +19,7 @@ class BlogApplicationTests {
 
     @Test
     void contextLoads() {
-        UserDto dto = new UserDto(){{setFirstName("Daolin");setLastName("Han");setEmail("daolin970108@gmail.com");setPassword("123");}};
+        UserDto dto = new UserDto(){{setFirstName("Daolin");setLastName("Han");setEmail("daolin970108@gmail.com");setPassword("123");new Role();}};
         userService.saveUser(dto);
     }
 }

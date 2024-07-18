@@ -17,7 +17,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable=false)
-    Boolean BlogManagement;
+    Boolean BlogManagement = true;
     @Column(nullable=false)
-    Boolean UserManagement;
+    Boolean UserManagement = true;
 }
