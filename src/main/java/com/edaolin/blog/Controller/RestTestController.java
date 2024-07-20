@@ -38,5 +38,8 @@ public class RestTestController {
         ListResponse thisIsAMessage = ListResponse.builder().response(new ArrayList<>(){{add("String1");add("String2");}}).build();
         return new ResponseEntity<>(thisIsAMessage, HttpStatus.OK) ;
     }
-
+    @GetMapping(value = "/restMapResponse")
+    public ResponseEntity<Map> restMapResponse(){
+        return new ResponseEntity<>(new HashMap<String,String>(){{put("String 1","String 2");}}, HttpStatus.OK) ;
+    }
 }
