@@ -37,4 +37,9 @@ public class User implements Serializable {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_role", referencedColumnName = "id")
     private Role role;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_event", referencedColumnName = "id")
+    @Builder.Default
+    private List<Event> events = new ArrayList<>();
 }

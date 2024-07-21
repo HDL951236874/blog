@@ -16,6 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 @RunWith( SpringRunner.class )
@@ -36,5 +38,13 @@ public class RandomAdder {
         User user2 = User.builder().name("Name2").password("Password2").email("Testmail4").blogs(new ArrayList<Blog>()).role(new Role()).build();
         userService.saveUser(user1);
         userService.saveUser(user2);
+    }
+
+    @Test
+    public void AddingBlogs() {
+        List<User> allUsers = userService.findAllUsers();
+        User user = allUsers.get(0);
+        blogService.saveBlog(Blog.builder().title("title").text("text").dateCreated(new Date()).dateUpdated(new Date()).pics(new ArrayList<>()).build(), user.getEmail());
+        blogService.saveBlog(Blog.builder().title("title1").text("text1").dateCreated(new Date()).dateUpdated(new Date()).pics(new ArrayList<>()).build(), user.getEmail());
     }
 }
