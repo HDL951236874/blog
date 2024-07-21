@@ -17,9 +17,4 @@ class BlogApplicationTests {
     @Autowired
     BlogService blogService;
 
-    @Test
-    void contextLoads() {
-        UserDto dto = new UserDto(){{setFirstName("Daolin");setLastName("Han");setEmail("daolin970108@gmail.com");setPassword("123");new Role();}};
-        userService.saveUser(dto);
-    }
 }

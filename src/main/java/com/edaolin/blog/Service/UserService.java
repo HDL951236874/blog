@@ -7,7 +7,7 @@ import com.edaolin.blog.Exceptions.ExceptionCollection;
 import java.util.List;
 
 public interface UserService {
-    void saveUser(UserDto userDto);
+    void saveUser(User user);
     User findByEmail(String email) throws ExceptionCollection.UserNotFoundException;
     List<User> findAllUsers();
 }

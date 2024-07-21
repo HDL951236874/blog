@@ -1,12 +1,10 @@
 package com.edaolin.blog.Data;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Blog {
     @Id
     @Column(name="id")
@@ -27,7 +26,15 @@ public class Blog {
     @Column(name = "text", nullable = true, columnDefinition = "TEXT")
     private String text;
 
+    @Column(name = "date_create", nullable = true)
+    private Date dateCreated;
+
+    @Column(name = "date_update", nullable = true)
+    private Date dateUpdated;
+
+
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "pics", referencedColumnName = "id")
-    private List<Pic> Pics = new ArrayList<>();
+    private List<Pic> pics = new ArrayList<>();
+
 }

@@ -3,7 +3,9 @@ package com.edaolin.blog.Controller;
 import com.edaolin.blog.Data.User;
 import com.edaolin.blog.Dto.UserDto;
 import com.edaolin.blog.Exceptions.ExceptionCollection;
+import com.edaolin.blog.Service.Impl.UserServiceImpl;
 import com.edaolin.blog.Service.UserService;
+import com.edaolin.blog.util.DTOConverter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +35,8 @@ public class AuthController {
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors().toString());
         }
-        userService.saveUser(user);
+        User user_ = DTOConverter.convertDtoToEntity(user);
+        userService.saveUser(user_);
         return ResponseEntity.ok().body("Register Success");
     }
 
