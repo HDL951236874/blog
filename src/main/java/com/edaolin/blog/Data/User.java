@@ -34,7 +34,7 @@ public class User implements Serializable {
     @Builder.Default
     private List<Blog> blogs = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_role", referencedColumnName = "id")
     private Role role;
 }
