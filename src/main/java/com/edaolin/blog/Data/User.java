@@ -42,4 +42,5 @@ public class User implements Serializable {
     @JoinColumn(name = "user_event", referencedColumnName = "id")
     @Builder.Default
     private List<Event> events = new ArrayList<>();
+
 }
