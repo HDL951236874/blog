@@ -3,14 +3,12 @@ package com.edaolin.blog.Controller;
 import com.edaolin.blog.Data.User;
 import com.edaolin.blog.Dto.UserDto;
 import com.edaolin.blog.Exceptions.ExceptionCollection;
-import com.edaolin.blog.Service.Impl.UserServiceImpl;
 import com.edaolin.blog.Service.UserService;
-import com.edaolin.blog.util.DTOConverter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +18,8 @@ import java.util.List;
 public class AuthController {
     @Autowired
     UserService userService;
-
+    @Autowired
+    PasswordEncoder passwordEncoder;
     public AuthController(UserService userService) {
         this.userService = userService;
     }
@@ -28,6 +27,7 @@ public class AuthController {
     // handler method to handle register user form submit request
     @PostMapping("/register/save")
     public ResponseEntity<String> registration(@Valid @ModelAttribute("user") UserDto user, BindingResult result) throws ExceptionCollection.UserNotFoundException {
+
         User existing = userService.findByEmail(user.getEmail());
         if (existing != null) {
             result.rejectValue("email", null, "There is already an account registered with that email");
@@ -35,7 +35,11 @@ public class AuthController {
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors().toString());
         }
-        User user_ = DTOConverter.convertDtoToEntity(user);
+        User user_ = User.builder().name(user.getFirstName()+ " "+ user.getLastName()).
+                email(user.getEmail()).
+                password(passwordEncoder.encode(user.getPassword())).
+                build();
+
         userService.saveUser(user_);
         return ResponseEntity.ok().body("Register Success");
     }
